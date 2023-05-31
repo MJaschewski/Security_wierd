@@ -4,6 +4,7 @@ import de.neuefische.backend.service.MongoUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class UserController {
         if (principal != null) {
             return principal.getName();
         }
-        return "Du bist nicht eingeloggt!";
+        return "anonymous User";
     }
 
     @GetMapping("/me2")
@@ -31,5 +32,10 @@ public class UserController {
                 .getContext()
                 .getAuthentication()
                 .getName();
+    }
+
+    @PostMapping("/login")
+    String login() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
