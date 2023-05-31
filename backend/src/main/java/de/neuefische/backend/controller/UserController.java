@@ -1,6 +1,7 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.service.MongoUserDetailsService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,5 +38,12 @@ public class UserController {
     @PostMapping("/login")
     String login() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @PostMapping("/logout")
+    String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        SecurityContextHolder.clearContext();
+        return "logged out";
     }
 }
